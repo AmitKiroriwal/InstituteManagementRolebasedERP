@@ -1,0 +1,274 @@
+﻿@using InstituteManagement.Models.ViewModels;
+@model RegisterViewModel
+@{
+    ViewBag.Title = "User Registration";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>Create account</h5>
+                </div>
+                <div class="card-body">
+                    <form enctype="multipart/form-data" method="post" asp-action="Register" asp-controller="Account">
+                       
+
+                        <div class="row g-3 mb-1">
+                            <div>
+                                <label asp-for="InstituteName" class="form-label">Institute Name</label>
+                                <input asp-for="InstituteName" class="form-control" type="text" placeholder="Institute Name">
+                                <span asp-validation-for="InstituteName" style="color:red"></span>
+
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-1">
+                            <div class="col-md-4">
+                                <label asp-for="FirstName" class="form-label"></label>
+                                <input asp-for="FirstName" class="form-control" required="" placeholder="First Name" >
+                                <span asp-validation-for="FirstName" style="color:red"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="LastName" class="form-label"></label>
+                                <input asp-for="LastName" class="form-control" placeholder="Last Name">
+                                <span asp-validation-for="LastName" style="color:red"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="UserName" class="form-label"></label>
+                                <input asp-for="UserName" class="form-control" placeholder="User Name" disabled>
+                                <span asp-validation-for="UserName" style="color:red"></span>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-1">
+
+                            <div class="col-md-4">
+                                <label asp-for="PhoneNumber" class="form-label">Contact No.</label>
+                                <input asp-for="PhoneNumber" class="form-control" type="tel" placeholder="Contact No.">
+                                <span asp-validation-for="PhoneNumber" style="color:red"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="ContactNo_1" class="form-label">Alternate No.</label>
+                                <input asp-for="ContactNo_1" class="form-control" type="tel" placeholder="Alternate Contact No.">
+                                <span asp-validation-for="ContactNo_1" style="color:red"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="ContactNo_2" class="form-label">Telephone No.</label>
+                                <input asp-for="ContactNo_2" class="form-control" type="tel" placeholder="Telephone No.">
+                                <span asp-validation-for="ContactNo_2" style="color:red"></span>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-1">
+
+                            <div class="col-md-8">
+                                <label asp-for="Email" class="form-label">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="icon-email"></i></span>
+                                    <input asp-for="Email" class="form-control" type="email" required="" placeholder="Test@gmail.com">
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-1">
+                            <div class="col-md-4">
+                                <label asp-for="State" class="form-label" for="state">State</label>
+                                <select asp-for="State" class="form-select" id="state" asp-items="@ViewBag.States" required="">
+                                    <option value="">Selec State</option>
+                                </select>
+                                <span asp-validation-for="State" style="color:red"></span>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <label asp-for="District" class="form-label" for="district">District</label>
+                                <select asp-for="District" class="form-select" id="district" required="">
+                                    <option value="">Select District</option>
+                                </select>
+                                <span asp-validation-for="District" style="color:red"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="City" class="form-label" for="city">City</label>
+                                <select asp-for="City" class="form-select" id="city">
+                                    <option value="">Select City</option>
+                                </select>
+                                <span asp-validation-for="City" style="color:red"></span>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-1">
+                            <div class="col-md-2">
+                                <label asp-for="StateCode" class="form-label">StateCode</label>
+                                <input asp-for="StateCode" class="form-control" id="#stateCode" type="text" placeholder="StateCode">
+                            </div>
+                            <div class="col-md-2">
+                                <label asp-for="Pincode" class="form-label">Pincode</label>
+                                <input asp-for="Pincode" class="form-control" type="text" placeholder="Pincode">
+                            </div>
+                            <div class="col-md-8">
+                                <label asp-for="Address" class="form-label">Address</label>
+                                <input asp-for="Address" class="form-control" type="text" placeholder="Address">
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-1">
+                            <div class="col-md-4">
+                                <label asp-for="GSTNo" class="form-label">GST No.</label>
+                                <input asp-for="GSTNo" class="form-control" type="text" placeholder="GST No.">
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="PanNo" class="form-label">Pan No.</label>
+                                <input asp-for="PanNo" class="form-control" type="text" placeholder="Pan No.">
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="UANNo" class="form-label">UAN No.</label>
+                                <input asp-for="UANNo" class="form-control" type="text" placeholder="UAN No.">
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-1">
+                            <div class="col-md-3">
+                                <label asp-for="BankAccName" class="form-label">Bank Account Name</label>
+                                <input asp-for="BankAccName" class="form-control" type="text" placeholder="Bank Account Name">
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="BankAccNo" class="form-label">Bank Account No.</label>
+                                <input asp-for="BankAccNo" class="form-control" type="text" placeholder="Bank Account No.">
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="IfscCode" class="form-label">IFSC Code</label>
+                                <input asp-for="IfscCode" class="form-control" type="text" placeholder="IFSC Code">
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="Branch" class="form-label">Branch</label>
+                                <input asp-for="Branch" class="form-control" type="text" placeholder="Branch">
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-1">
+                            <div class="col-md-12">
+                                <label asp-for="MapPath" class="form-label">Map Path</label>
+                                <input asp-for="MapPath" class="form-control" type="text" placeholder="Map Path">
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-1">
+                            <div class="col-md-6">
+                                <label asp-for="Signature" class="form-label">Signature</label>
+                                <div class="custom-file">
+                                    <input asp-for="Signature" class="form-control custom-file-input" placeholder="Select Image">
+                                    <label class="custom-file-lable">Choose Image</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Logo" class="form-label">Logo</label>
+                                <div class="custom-file">
+                                    <input asp-for="Logo" class="form-control custom-file-input" placeholder="Select Image">
+                                    <label class="custom-file-lable">Choose Image</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+                        <div class="form-group" >
+                            <button class="btn btn-primary btn-block" type="submit">Create Account</button>
+                            @*<button class="btn btn-info btn-block" type="button" asp-controller="Account" asp-action="ListUsers">Cancel</button>*@
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            var city = $("#city");
+
+            console.log("document is ready");
+            $('#state').change(function () {
+
+                var state = $("#state").val();
+                var district = $("#district");
+
+                var baseUrl = window.location.origin;
+                var settings = {
+                    "url": baseUrl + "/Account/FetchDistrict/" + state,
+                    "method": "POST",
+                    "timeout": 0
+
+                };
+
+                $.ajax(settings).done(function (response) {
+                    // console.log(response);
+
+                    if (response != null && !jQuery.isEmptyObject(response)) {
+                        district.empty();
+                        district.append($('<option/>', {
+                            value: null,
+                            text: "Select District"
+                        }));
+                        city.empty();
+                        city.append($('<option/>', {
+                            value: "",
+                            text: "Select City"
+                        }));
+
+                        //   var distJson = JSON.parse(response);
+
+                        $.each(response, function (i, res) {
+
+                            district.append($('<option/>', {
+                                value: res.value,
+                                text: res.text
+
+                            }));
+                            // console.log(res);
+                        });
+
+                    };
+                });
+            });
+
+            $('#district').change(function () {
+                var district = $("#district").val();
+
+
+                var baseUrl = window.location.origin;
+                var settings = {
+                    "url": baseUrl + "/Account/FetchCity/" + district,
+                    "method": "POST",
+                    "timeout": 0
+
+                };
+
+                $.ajax(settings).done(function (response) {
+
+                    if (response != null && !jQuery.isEmptyObject(response)) {
+                        city.empty();
+                        city.append($('<option/>', {
+                            value: "",
+                            text: "Select City"
+                        }));
+                        //   var distJson = JSON.parse(response);
+
+                        $.each(response, function (i, res) {
+
+                            city.append($('<option/>', {
+                                value: res.value,
+                                text: res.text
+
+                            }));
+                            // console.log(res);
+                        });
+
+                    };
+                });
+            });
+        });
+    </script>
+}

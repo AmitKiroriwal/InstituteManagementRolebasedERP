@@ -1,0 +1,111 @@
+﻿@using InstituteManagement_Models;
+@using Microsoft.AspNetCore.Identity;
+@{
+    ViewBag.Title = "Roles";
+}
+@inject UserManager<ApplicationUser> userManager;
+@inject SignInManager<ApplicationUser> signInManager;
+@model IEnumerable<UserAccountConfirmations> ;
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Zero Configuration  Starts-->
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>All Roles</h5>@*<span>DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code>$().DataTable();</code>.</span><span>Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</span>*@
+
+                    @*  <button  class="btn btn-pill btn-outline-primary-2x btn-air-primary" type="button" title="btn btn-pill btn-outline-primary-2x btn-air-primary">Create New</button>*@
+                </div>
+                @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    <div style="padding-left:30px">
+                        <a class="btn btn-pill btn-outline-primary-2x btn-air-primary" type="button" asp-controller="Admin" asp-action="CreateRole">Create New Role</a>
+                    </div>
+                }
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="display table table-light table-striped mt-5" id="basic-1">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>SrNo</th>
+                                    <th>User ID</th>
+                                   
+                                    <th>Email Confirmed</th>
+                                    <th>Confirmation Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (Model.Any())
+                                {
+                                    int SrNo = 1;
+
+                                    @foreach (var data in Model)
+                                    {
+                                        <tr>
+                                            <td>@SrNo</td>
+                                            <td>@data.UserAccountId</td>
+                                            
+                                            <td>@data.EmailConfirmation</td>
+                                            <td>@data.IsConfirmed</td>
+                                            <td>
+
+                                                <div class="btn-group">
+                                                    <form method="post" asp-action="ConfirmAccount">
+                                                        <a class="btn btn-primary btn-sm" style="margin-left:5px;" type="submit" onclick="if(!confirm('Are you Sure To Confirm User ?')){return false}"
+                                                                asp-action="ConfirmAccount" asp-route-id="@data.id" asp-controller="Admin">
+                                                            <span class="bi bi-check"></span>
+                                                        </a>
+                                                    </form>
+                                                    <a asp-controller="Admin" asp-action="ViewUser" asp-route-id="@data.id" class="btn btn-success btn-sm"> <span class="bi bi-eye"></span> </a>
+                                                    <a asp-action="DeleteUser" asp-route-id="@data.id" class="btn btn-danger btn-sm"> <span class="bi bi-trash"></span> </a>
+                                                     
+                                                </div>
+
+                                            </td>
+                                           
+
+                                        </tr>
+                                        SrNo++;
+                                    }
+                                }
+
+                                else
+                                {
+                                    <tr>
+                                        <td>No record found...</td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Zero Configuration  Ends-->
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

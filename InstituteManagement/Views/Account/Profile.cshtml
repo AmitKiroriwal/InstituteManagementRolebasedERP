@@ -1,0 +1,44 @@
+﻿
+@using InstituteManagement.Models.ViewModels;
+@using Microsoft.AspNetCore.Identity.UI.V5.Pages.Account.Manage.Internal;
+
+@model ProfileViewModel
+@{
+    ViewBag.Title = "Profile";
+    ViewBag.ActivePage = ManageNavPages.Index;
+}
+
+
+<div class="row">
+<ul class="nav nav-pills flex-column col-sm-4">
+    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-action="Profile" asp-controller="Account">Profile</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" asp-action="Email" asp-controller="Account">Email</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-action="ChangePassword" asp-controller="Account">Password</a></li>
+
+    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-action="TwoFactorAuthentication" asp-controller="Account">Two-factor authentication</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-action="PersonalData" asp-controller="Account">Personal data</a></li>
+</ul>
+
+    <div class="col-md-6">
+        <partial name="_StatusMessage" model="@Model.AccountStatus" />
+
+        <form id="profile-form" method="post" asp-action="Profile" asp-controller="Account">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="UserName" class="form-control" disabled />
+                <label asp-for="UserName" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="PhoneNumber" class="form-control" />
+                <label asp-for="PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

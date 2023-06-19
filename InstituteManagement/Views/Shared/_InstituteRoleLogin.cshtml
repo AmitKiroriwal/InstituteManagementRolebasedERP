@@ -1,0 +1,242 @@
+﻿@using InstituteManagement_Models;
+@using Microsoft.AspNetCore.Identity;
+
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var user = UserManager.GetUserAsync(User).Result;
+
+    var userRole = (UserManager.GetRolesAsync(user)).Result.FirstOrDefault();
+}
+
+<ul class="nav">
+    <li class="nav-item nav-profile border-bottom">
+        <a href="#" class="nav-link flex-column">
+            <div class="nav-profile-image">
+                <img src="~/assets/images/institute/@user.Logo" alt="profile" />
+                <!--change to offline or busy as needed-->
+            </div>
+
+            <div class="nav-profile-text d-flex ml-0 mb-3 flex-column">
+                <span class="font-weight-semibold mb-1 mt-2 text-center">@UserManager.GetUserName(User)</span>
+                <span class="text-secondary icon-sm text-center">@userRole</span>
+            </div>
+        </a>
+    </li>
+
+    <li class="nav-item pt-3">
+        <a class="nav-link d-block" href="index.html">
+            <img class="sidebar-brand-logo" src="~/Layout_Assets/images/logo.svg" alt="" />
+            <img class="sidebar-brand-logomini" src="~/Layout_Assets/images/logo-mini.svg" alt="" />
+            <div class="small font-weight-light pt-1">Responsive Dashboard</div>
+        </a>
+        <form class="d-flex align-items-center" action="#">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                </div>
+                <input type="text" class="form-control border-0" placeholder="Search" />
+            </div>
+        </form>
+    </li>
+    <li class="pt-2 pb-1">
+        <span class="nav-item-head">Institute Menu</span>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="index.html">
+            <i class="mdi mdi-compass-outline menu-icon"></i>
+            <span class="menu-title">Dashboard</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            <span class="menu-title">Institute Setup</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Register" asp-controller="Account" asp-route-itemid="@user.Id">Institute Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/dropdowns.html">Branch Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/typography.html">Student Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/typography.html">Teacher Management</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            <span class="menu-title">Academic Setup</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/buttons.html">Academic Setup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/dropdowns.html">Subject Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/typography.html">Syllabus Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/typography.html">Syllabus Teaching</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            <span class="menu-title">User Management</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/buttons.html">Staff Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/dropdowns.html">Student Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/typography.html">Student Attendance</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/typography.html">Placement Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/typography.html">Task Management</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            <span class="menu-title">Account Management</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/buttons.html">Accounts/Journals</a>
+                  <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="pages/ui-features/buttons.html">Financial Year</a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Institution Account Year</a>
+                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Tax Configuration</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Account Heads</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Financial Reports</a>
+                            </li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/dropdowns.html">Misc Transaction</a>
+                </li>
+                
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            <span class="menu-title">HR Management</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/buttons.html">Staff Attendance</a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Attendance Entry & History</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/buttons.html">Leave Management</a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Leave Configuration</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Leave Management</a>
+                            </li>
+                    </ul>
+                    </div>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/buttons.html">Staff Payroll</a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Payroll Structure</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Payslip Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Payroll Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="pages/ui-features/buttons.html">One One Meeting</a>
+                            </li>
+                    </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/dropdowns.html">Expense Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pages/ui-features/buttons.html">Staff Recruitement</a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Job Openings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/ui-features/buttons.html">Job Seeker Lists</a>
+                            </li>
+                    </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
+    
+    <li class="nav-item pt-3">
+        <a class="nav-link" href="http://bootstrapdash.com/demo/plus-free/documentation/documentation.html" target="_blank">
+            <i class="mdi mdi-file-document-box menu-icon"></i>
+            <span class="menu-title">Documentation</span>
+        </a>
+    </li>
+</ul>
+
+

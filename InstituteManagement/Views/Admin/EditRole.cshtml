@@ -1,0 +1,38 @@
+﻿@using InstituteManagement.Models.ViewModels;
+@{
+    ViewBag.Title = "Update Roles";
+}
+
+@model EditRoleViewModel
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row"> 
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header pb-0">
+            <h5>Users in this role</h5>
+        </div>
+        <div class="card-body">
+            <div class="card-body">
+                <div class="list-group">
+                    @if (Model.Users.Any())
+                    {
+                        foreach (var user in Model.Users)
+                        {
+                            <a class="list-group-item list-group-item-action ">@user</a>
+                        }
+                    }
+                    else
+                    {
+                        <a class="list-group-item list-group-item-action ">Not at the moment</a>
+                    }
+                </div>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary" asp-route-roleId="@Model.Id" type="button" asp-controller="Admin" asp-action="EditUsersInRole">Add or remove user</a>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+</div>

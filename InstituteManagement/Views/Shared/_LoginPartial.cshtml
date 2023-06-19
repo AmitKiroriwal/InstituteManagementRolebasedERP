@@ -1,0 +1,35 @@
+﻿@using InstituteManagement_Models;
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a id="manage" class="nav-link "  asp-action="ManageAccount" asp-controller="Account" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+    </li>
+    <li class="nav-item">
+        <form id="logoutForm" class="form-inline"  asp-controller="Account" asp-action="Logout" >
+            <button id="logout" type="submit" class="nav-link btn btn-link ">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link " id="register" asp-controller="Account" asp-action="RegisterAdmin">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " id="login" asp-action="Login" asp-controller="Account">Login</a>
+    </li>
+}
+</ul>
+@*<script>
+    window.addEventListener('beforeunload', function (e) {
+        
+        document.getElementById("logoutForm").submit();
+        
+    });
+</script>*@

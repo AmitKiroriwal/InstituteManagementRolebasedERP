@@ -1,0 +1,12 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@using InstituteManagement_Models;
+@using Microsoft.AspNetCore.Identity.UI.V5.Pages.Account.Manage.Internal;
+@using Microsoft.AspNetCore.Identity;
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-action="Profile" asp-controller="Account">Profile</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" asp-action="Email" asp-controller="Account">Email</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-action="ChangePassword" asp-controller="Account">Password</a></li>
+    
+    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-action="TwoFactorAuthentication" asp-controller="Account">Two-factor authentication</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-action="PersonalData" asp-controller="Account">Personal data</a></li>
+</ul>
