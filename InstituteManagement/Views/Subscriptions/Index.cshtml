@@ -1,0 +1,100 @@
+﻿@using InstituteManagement_Models.Subscriptions;
+@model IEnumerable<Plans>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Zero Configuration  Starts-->
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>All Users</h5>
+                    @*<span>DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code>$().DataTable();</code>.</span><span>Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</span>*@
+
+                   <button  class="btn btn-pill btn-outline-primary-2x btn-air-primary" type="button" title="btn btn-pill btn-outline-primary-2x btn-air-primary" asp-action="CreatePlan" asp-controller="Subscription">Create Plan</button>
+                </div>
+                <form asp-action="ExporDataToFile" method="post">
+                    <div style="padding-left:30px;padding-right:30px">
+                        <a class="btn btn-pill btn-outline-primary-2x btn-air-primary" type="button" asp-controller="Account" asp-action="Register">Create New </a>
+
+
+                        <input checked="checked" id="ExportExcel" name="Export"
+                               type="radio" value="Excel" hidden />
+                        <button type="submit" style="float:right" class="btn btn-pill btn-outline-secondary-2x btn-air-secondary">Export</button>
+
+                    </div>
+                </form>
+                <partial name="_StatusMessage" model="@ViewBag.Message"/>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="display table table-light table-striped mt-5" id="basic-1">
+                            <thead>
+                                <tr>
+                                    <th>SrNo</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Features</th>
+                                    <th>Price</th>
+                                    <th>Discount</th>
+                                    <th>Duration</th>
+                                    <th>Created Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Any())
+                                {
+
+                                    int SrNo = 1;
+
+                                    @foreach (var data in Model)
+                                    {
+                                        <tr>
+                                            <td>@SrNo</td>
+                                            <td>@data.PlanName</td>
+                                            <td>@data.PlanDescription</td>
+
+                                            <td>@data.Features</td>
+                                            <td>@data.Price</td>
+                                            <td>@data.Discount</td>
+                                            <td>@data.Duration</td>
+                                            <td>@data.CreationDate</td>
+                                            <td>
+                                                @if (data.IsActive ==true)
+
+                                                {
+                                                    <a asp-controller="Administration" asp-action="UserStatus" asp-route-id="@data.PlanID" class="btn btn-primary btn-sm"> <span>@data.IsActive</span> </a>
+                                                }
+                                                else
+
+                                                {
+                                                    <a asp-controller="Administration" asp-action="UserStatus" asp-route-id="@data.PlanID" class="btn btn-danger btn-sm"> <span>@data.IsActive</span> </a>
+                                                }
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a asp-controller="Subscriptions" asp-action="ViewPlan" asp-route-id="@data.PlanID" class="btn btn-success btn-sm"> <span class="bi bi-eye"></span> </a>
+                                                    <a class="btn btn-info btn-sm" asp-controller="Subscriptions" asp-action="EditPlan" asp-route-id="@data.PlanID" data-bs-original-title="" title=""> <span class="bi bi-pencil-square"></span> </a>
+
+                                                    <a asp-action="DeletePlan" asp-controller="Subscriptions" asp-route-id="@data.PlanID" class="btn btn-danger btn-sm" onclick="if(!confirm('Are you Sure To delete item ?')){return false}"> <span class="bi bi-trash"></span> </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        SrNo++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>No record found...</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Zero Configuration  Ends-->
+    </div>
+</div>

@@ -1,8 +1,10 @@
+using Habanero.Util;
 using InstituteManagement.Models.Interfaces;
 using InstituteManagement.Models.Repositories;
 using InstituteManagement_Models;
 using InstituteManagement_Models.Context;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.S
 
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 builder.Services.AddScoped<IUserAccountConfirm, UserAccountConfirmRepo>();
+builder.Services.AddScoped<ISubscriptionRepo, SubscriptionRepo>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

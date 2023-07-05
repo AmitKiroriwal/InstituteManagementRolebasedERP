@@ -75,6 +75,11 @@ namespace InstituteManagement.Controllers
             return View(model);
         }
 
+        public IActionResult RegistrationSuccess()
+        {
+            return View();
+        }
+
         [Authorize(Roles ="Admin,Institute")]
         public async Task<IActionResult> Register(string itemid)
         {
@@ -149,11 +154,19 @@ namespace InstituteManagement.Controllers
                 {
                     uniqueLogoName = UploadFile(model);
                 }
+            else
+            {
+                uniqueLogoName = crntuser.Logo;
+            }
                 string signatureName = null;
                 if (model.Signature != null)
                 {
                     signatureName = UploadSign(model);
                 }
+            else
+            {
+                signatureName = crntuser.Signature;
+            }
                if(crntuser!=null)
                 {
 
@@ -168,7 +181,7 @@ namespace InstituteManagement.Controllers
                 crntuser.City = model.City;
                 crntuser.Pincode = model.Pincode;
                 crntuser.Address = model.Address;
-
+                crntuser.UserName = model.UserName;
                 crntuser.InstituteName = model.InstituteName;
                 crntuser.StateCode = model.StateCode;
                 crntuser.GSTNo = model.GSTNo;
@@ -247,6 +260,8 @@ namespace InstituteManagement.Controllers
                     //Assign user to a role as per the modelview Selection
                     await userManager.AddToRoleAsync(user, "Institute");
 
+
+
                 UserAccountConfirmations confirmations = new UserAccountConfirmations()
                 {
                     UserAccountId = user.Id,
@@ -265,7 +280,7 @@ namespace InstituteManagement.Controllers
                     //await signInManager.SignInAsync(user, isPersistent: false);
 
                     
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("RegistrationSuccess", "Account");
               }
                 foreach (var error in result.Errors)
                 {
@@ -305,11 +320,11 @@ namespace InstituteManagement.Controllers
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ResetPassword",
-                    pageHandler: null,
-                    values: new { area = "Identity", code },
-                    protocol: Request.Scheme);
+                //var callbackUrl = Url.Page(
+                //    "/Account/ResetPassword",
+                //    pageHandler: null,
+                //    values: new { area = "Identity", code },
+                //    protocol: Request.Scheme);
 
                 //await emailSender.SendEmailAsync(
                 //    model.Email,
@@ -331,6 +346,7 @@ namespace InstituteManagement.Controllers
             return View();
         }
         [HttpPost]
+
         public async Task<IActionResult> ForgotPasswordAdmin(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -384,8 +400,8 @@ namespace InstituteManagement.Controllers
             ProfileViewModel model = new ProfileViewModel()
             {
                 UserName = userName,
-               PhoneNumber= phoneNumber,
-               AccountStatus="Active"
+                PhoneNumber= phoneNumber,
+                AccountStatus="Active"
               
             };
 

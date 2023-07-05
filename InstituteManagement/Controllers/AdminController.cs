@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Data;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Text.Encodings.Web;
+using InstituteManagement_Models.Subscriptions;
 
 namespace InstituteManagement.Controllers
 {
@@ -16,15 +21,18 @@ namespace InstituteManagement.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUserAccountConfirm userAccountConfirm;
-
-        public AdminController(RoleManager<IdentityRole> roleManager, 
+        private readonly ISubscriptionRepo subscriptionRepo;
+        public AdminController(RoleManager<IdentityRole> roleManager,
                                UserManager<ApplicationUser> userManager,
-                                IUserAccountConfirm userAccountConfirm     )
+                                IUserAccountConfirm userAccountConfirm,
+                                ISubscriptionRepo subscriptionRepo
+                               )
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.userAccountConfirm = userAccountConfirm;
-
+            this.subscriptionRepo= subscriptionRepo;
+            
         }
         [HttpGet]
         public IActionResult CreateRole()
@@ -225,9 +233,10 @@ namespace InstituteManagement.Controllers
         public async Task<IActionResult> GetPendingAccountConfirmation()
         {
             var model = await userAccountConfirm.GetPendingConfirmation();
+                  
             return View(model);
         }
-        [HttpPost]
+       // [HttpPost]
         public async Task<IActionResult> ConfirmAccount(int id)
         {
             var currentuser = await userManager.GetUserAsync(User);
@@ -235,17 +244,75 @@ namespace InstituteManagement.Controllers
             if(result!=null)
             {
                 var user = await userManager.FindByIdAsync(result.UserAccountId);
-               var token= await userManager.GenerateEmailConfirmationTokenAsync(user);
+                 var token= await userManager.GenerateEmailConfirmationTokenAsync(user);
                 if(token!=null)
                 {
                     await userManager.ConfirmEmailAsync(user, token);
                     user.AddedBy = currentuser.Id;
                     user.Status = Status.Active;
                     await userManager.UpdateAsync(user);
+
+                    //Create Initial Free Subscription on account confirmation
+                    var sub = new Subscription
+                    {
+                        UserId = user.Id,
+                        Name= "Free Subscription",
+                        PlanId = 5,
+                        StartDate = DateTime.UtcNow,
+                        EndDate = DateTime.UtcNow.AddMonths(1),
+                        IsActive= true,
+                        IsPaymentComplete= true,
+                        AmountPaid=0,
+                        PaymentDate=DateTime.UtcNow,
+                        CreationDate=DateTime.UtcNow,
+                    };
+                    //Add subscription to subscription table
+                    await subscriptionRepo.CreateSubscription(sub);
+
+                  SendEmail(user.Email,user.UserName,user.UserPassword, sub.Name);
                 }
-            }
+            } 
             return RedirectToAction("GetPendingAccountConfirmation");
         }
+
+       
+        
+        public async void  SendEmail(string email ,string username,string password, string subscription)
+         {
+            try
+            {
+
+          
+             var smtpClient = new SmtpClient("smtp.gmail.com", 587)
+             {
+               UseDefaultCredentials = false,
+               EnableSsl = true,
+               Credentials = new NetworkCredential("ocstech002@gmail.com", "xdbvpqergacmpfly")
+             };
+
+              var mailMessage = new MailMessage
+              {
+               From = new MailAddress("ocstech002@gmail.com"),
+               Subject = "Account confirmation ",
+               Body = $"Your Username={username}  password={password} Subscription={subscription}"
+              };
+
+              mailMessage.To.Add(email);
+
+              smtpClient.Send(mailMessage);
+              
+
+            }
+            catch (Exception ex)
+            { 
+                throw ex;
+                
+            }
+
+        }
+
+   
+
 
         public IActionResult ManageAccount()
         {
@@ -329,7 +396,7 @@ namespace InstituteManagement.Controllers
         {
             //if (userManager != null)
 
-            var user = await userManager.Users.Where(x=>x.EmailConfirmed==true).ToListAsync();
+            var user = await userManager.Users.Where(x=>x.EmailConfirmed==true ).ToListAsync();
                 if (user == null)
                 {
                     return View("Error");
@@ -343,13 +410,13 @@ namespace InstituteManagement.Controllers
         {
             try
             {
-                ApplicationUser model = await userManager.FindByIdAsync(Id);
-                if (model == null)
+                var user = await userManager.FindByIdAsync(Id);
+                if (user == null)
                 {
                     Response.StatusCode = 200;
-                    return View("PageNotFound", Id);
+                    return View("Error", Id);
                 }
-                return View(model);
+                return View(user);
             }
             catch
             {
@@ -369,8 +436,9 @@ namespace InstituteManagement.Controllers
             }
             else
             {
-                var result = await userManager.DeleteAsync(user);
-
+                //user.Status = Status.Delete;
+                //var result = await userManager.UpdateAsync(user);
+                var result= await userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("ListUsers");
@@ -383,6 +451,24 @@ namespace InstituteManagement.Controllers
 
                 return View("ListUsers");
             }
+        }
+
+        public async Task<IActionResult> UserStatus(string Id)
+        {
+            var user= await userManager.FindByIdAsync(Id);
+            if(user!=null)
+            {
+                if (user.Status == Status.Active)
+                {
+                    user.Status = Status.Inactive;
+                }
+                else
+                {
+                    user.Status = Status.Active;
+                }
+            }
+            await userManager.UpdateAsync(user);
+            return RedirectToAction("ListUsers");
         }
 
     }

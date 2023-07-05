@@ -80,10 +80,24 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="pages/forms/basic_elements.html">
+        <a class="nav-link" asp-action="Index" asp-controller="Subscriptions" >
             <i class="mdi mdi-format-list-bulleted menu-icon"></i>
             <span class="menu-title">Subscriptions</span>
         </a>
+        <div class="collapse" >
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="CreatePlan" asp-controller="Subscriptions">Create Plan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="GetSubscriptions" asp-controller="Subscriptions">View Subscriptions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="CreateSubscription" asp-controller="Subscriptions">Create Subscription</a>
+                </li>
+                
+            </ul>
+        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="pages/charts/chartjs.html">

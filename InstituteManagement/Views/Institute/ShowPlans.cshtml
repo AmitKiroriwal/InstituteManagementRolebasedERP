@@ -1,0 +1,31 @@
+﻿@using InstituteManagement.Models.ViewModels;
+@model List<PlansViewModel>
+
+<h2>Available Plans</h2>
+
+@if (Model.Count > 0)
+{
+    <div class="plans-container">
+        @foreach (var plan in Model)
+        {
+            <div class="plan-card col-lg-3 m-1">
+                <h3>@plan.Name</h3>
+                <p class="price">@plan.Price INR/month</p>
+                <ul class="offer-list">
+                    @foreach (var feature in plan.Features)
+                    {
+                        <li>@feature </li>
+                    }
+                </ul>
+                <p class="discount">@plan.Discount % Discount Offer</p>
+                <form action="@plan.SubscribeUrl" method="post">
+                    <button type="submit" class="subscribe-btn">Subscribe</button>
+                </form>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No plans available at the moment.</p>
+}

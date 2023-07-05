@@ -52,7 +52,8 @@ namespace InstituteManagement.Models.Repositories
 
         public async Task<IEnumerable<UserAccountConfirmations>> GetPendingConfirmation()
         {
-            var model = await dbContext.UserAccountConfirmations.Where(x => x.IsConfirmed==false).ToListAsync();
+            var model = await dbContext.UserAccountConfirmations.Include(e=>e.ApplicationUser).Where(x => x.IsConfirmed==false).ToListAsync();
+            
             return model;
         }
     }

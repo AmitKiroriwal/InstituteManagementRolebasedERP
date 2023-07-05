@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="UserName" class="form-label"></label>
-                                <input asp-for="UserName" class="form-control" placeholder="User Name" disabled>
+                                <input asp-for="UserName" class="form-control" placeholder="User Name">
                                 <span asp-validation-for="UserName" style="color:red"></span>
                             </div>
                         </div>
@@ -44,17 +44,17 @@
 
                             <div class="col-md-4">
                                 <label asp-for="PhoneNumber" class="form-label">Contact No.</label>
-                                <input asp-for="PhoneNumber" class="form-control" type="tel" placeholder="Contact No.">
+                                <input asp-for="PhoneNumber" class="form-control" type="tel" placeholder="Contact No." pattern="[0-9]{10}">
                                 <span asp-validation-for="PhoneNumber" style="color:red"></span>
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="ContactNo_1" class="form-label">Alternate No.</label>
-                                <input asp-for="ContactNo_1" class="form-control" type="tel" placeholder="Alternate Contact No.">
+                                <input asp-for="ContactNo_1" class="form-control" type="tel" placeholder="Alternate Contact No." pattern="[0-9]{10}">
                                 <span asp-validation-for="ContactNo_1" style="color:red"></span>
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="ContactNo_2" class="form-label">Telephone No.</label>
-                                <input asp-for="ContactNo_2" class="form-control" type="tel" placeholder="Telephone No.">
+                                <input asp-for="ContactNo_2" class="form-control" type="tel" placeholder="Telephone No." pattern="[0-9]{10}">
                                 <span asp-validation-for="ContactNo_2" style="color:red"></span>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                             </div>
                             <div class="col-md-2">
                                 <label asp-for="Pincode" class="form-label">Pincode</label>
-                                <input asp-for="Pincode" class="form-control" type="text" placeholder="Pincode">
+                                <input asp-for="Pincode" class="form-control" type="text" placeholder="Pincode" pattern="[0-9]{6}">
                             </div>
                             <div class="col-md-8">
                                 <label asp-for="Address" class="form-label">Address</label>
@@ -112,15 +112,15 @@
                         <div class="row g-3 mb-1">
                             <div class="col-md-4">
                                 <label asp-for="GSTNo" class="form-label">GST No.</label>
-                                <input asp-for="GSTNo" class="form-control" type="text" placeholder="GST No.">
+                                <input asp-for="GSTNo" class="form-control" type="text" placeholder="GST No." pattern="[0-9A-Za-z]{15}">
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="PanNo" class="form-label">Pan No.</label>
-                                <input asp-for="PanNo" class="form-control" type="text" placeholder="Pan No.">
+                                <input asp-for="PanNo" class="form-control" type="text" placeholder="Pan No." pattern="[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}">
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="UANNo" class="form-label">UAN No.</label>
-                                <input asp-for="UANNo" class="form-control" type="text" placeholder="UAN No.">
+                                <input asp-for="UANNo" class="form-control" type="text" placeholder="UAN No." pattern="[0-9]{12}">
                             </div>
                         </div>
                         <div class="row g-3 mb-1">
@@ -130,11 +130,11 @@
                             </div>
                             <div class="col-md-3">
                                 <label asp-for="BankAccNo" class="form-label">Bank Account No.</label>
-                                <input asp-for="BankAccNo" class="form-control" type="text" placeholder="Bank Account No.">
+                                <input asp-for="BankAccNo" class="form-control" type="text" placeholder="Bank Account No." pattern="[0-9]{9,18}">
                             </div>
                             <div class="col-md-3">
                                 <label asp-for="IfscCode" class="form-label">IFSC Code</label>
-                                <input asp-for="IfscCode" class="form-control" type="text" placeholder="IFSC Code">
+                                <input asp-for="IfscCode" class="form-control" type="text" placeholder="IFSC Code" pattern="[A-Za-z]{4}[0-9]{7}">
                             </div>
                             <div class="col-md-3">
                                 <label asp-for="Branch" class="form-label">Branch</label>

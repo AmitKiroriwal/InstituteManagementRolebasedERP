@@ -1,0 +1,91 @@
+﻿@using InstituteManagement_Models.Subscriptions;
+@model Success
+
+@{
+    var data = ViewBag.succes;
+    if (Model.razorpay_order_id == "")
+    {
+        ViewData["Title"] = "Payment Cancel";
+
+    }
+    else
+    {
+        ViewData["Title"] = "Payment Success";
+
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1 {
+            color: #333333;
+            margin-bottom: 30px;
+        }
+
+        p {
+            color: #666666;
+            margin-bottom: 20px;
+        }
+
+        .details {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+            .details span {
+                font-weight: bold;
+            }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Successful</h1>
+        <div class="details">
+            <p><span>User ID:</span> @Model.userid</p>
+            <p><span>Payment ID:</span> @Model.razorpay_payment_id</p>
+            <p><span>Order ID:</span> @Model.razorpay_order_id</p>
+            <p><span>Paid Amount:</span> @Model.paidfee</p>
+            <p><span>Signature:</span> @Model.razorpay_signature</p>
+        </div>
+        <p>Thank you for your payment! Your transaction was successful.</p>
+        <p>An email with the payment details has been sent to your registered email address.</p>
+        <a asp-action="Index" asp-controller="Subscriptions" class="btn">Back To Plans</a>
+    </div>
+</body>
+</html>
+
+
+
+
+

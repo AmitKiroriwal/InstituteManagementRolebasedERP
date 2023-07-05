@@ -19,8 +19,12 @@
             <p class="card-text">Phone :  @Model.PhoneNumber</p>
             <p class="card-text">Institute :  @Model.InstituteName</p>
             <p class="card-text">Status :  @Model.Status</p>
-            <a asp-action="EditUser" asp-controller="Admin" class="btn btn-primary">Back</a>
-            <a onclick="deleteConfirm('@Model.Id')" class="btn btn-danger">Delete</a>
+            <a class="btn btn-info btn-md" asp-controller="Account" asp-action="Register" asp-route-id="@Model.Id" data-bs-original-title="" title=""> <span class="bi bi-pencil-square"></span> </a>
+
+            <a asp-action="DeleteUser" asp-controller="Admin" asp-route-id="@Model.Id" class="btn btn-danger btn-md" onclick="if(!confirm('Are you Sure To delete item ?')){return false}"> <span class="bi bi-trash"></span> </a>
+
+            @*<a asp-action="EditUser" asp-controller="Admin" class="btn btn-primary">Edit</a>
+            <a onclick="deleteConfirm('@Model.Id')" class="btn btn-danger">Delete</a>*@
         </div>
     </div>
 

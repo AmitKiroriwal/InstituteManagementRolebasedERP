@@ -1,0 +1,67 @@
+﻿@using InstituteManagement_Models.Subscriptions;
+@model Plans;
+
+<div class=" register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+        </div>
+
+        <div class="col-md-8 register-right">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h3 class="register-heading">Modify an Plan</h3>
+                <form id="registerForm" asp-action="EditPlan" asp-controller="Subscriptions" method="post">
+                    <div class="row register-form">
+                        <div class="col-md-12 register-right">
+                            <partial name="_StatusMessage" model="@ViewBag.Message" />
+                            <div class="form-group">
+                                <input class="form-control" hidden asp-for="PlanID" />
+                                <input class="form-control" placeholder="Plan Name *" asp-for="PlanName" />
+                                <span asp-validation-for="PlanName"></span>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Plan Descriptions *" asp-for="PlanDescription"></textarea>
+                                <span asp-validation-for="PlanDescription"></span>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" asp-for="Duration">
+                                    <option value="">Duration</option>
+                                    <option value="1">1 Month</option>
+                                    <option value="3">3 Month</option>
+                                    <option value="6">6 Month</option>
+                                    <option value="9">9 Month</option>
+                                    <option value="12">1 Year</option>
+                                </select>
+                                <span asp-validation-for="Duration"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Price *" asp-for="Price" />
+                                <span asp-validation-for="Price"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Plan Features *" asp-for="Features"></textarea>
+                                <span asp-validation-for="Features"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" placeholder="Discount on Plan *" asp-for="Discount" />
+                                <span asp-validation-for="Discount"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="IsActive" />
+                                <input type="checkbox" asp-for="IsActive" />
+                                <span asp-validation-for="IsActive"></span>
+                            </div>
+
+                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>

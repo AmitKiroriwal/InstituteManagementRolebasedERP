@@ -51,20 +51,20 @@
                                     {
                                         <tr>
                                             <td>@SrNo</td>
-                                            
-                                            <td>@data.PhoneNumber</td>
                                             <td>@data.Email</td>
+                                            <td>@data.PhoneNumber</td>
+                                            
                                             <td>@data.InstituteName</td>
                                             <td>
                                                 @if (data.Status == Status.Active)
 
                                                 {
-                                                    <a asp-controller="Administration" asp-action="UserStatus" asp-route-id="@data.Id" class="btn btn-primary btn-sm"> <span>@data.Status</span> </a>
+                                                    <a asp-controller="Admin" asp-action="UserStatus" asp-route-id="@data.Id" class="btn btn-primary btn-sm"> <span>@data.Status</span> </a>
                                                 }
                                                 else
 
                                                 {
-                                                    <a asp-controller="Administration" asp-action="UserStatus" asp-route-id="@data.Id" class="btn btn-danger btn-sm"> <span>@data.Status</span> </a>
+                                                    <a asp-controller="Admin" asp-action="UserStatus" asp-route-id="@data.Id" class="btn btn-danger btn-sm"> <span>@data.Status</span> </a>
                                                 }
                                             </td>
                                             <td>

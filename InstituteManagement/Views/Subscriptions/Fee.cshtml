@@ -1,0 +1,17 @@
+﻿@using InstituteManagement_Models.Subscriptions;
+@model SendRequest;
+
+
+<form id="nonseamless" method="post" name="redirect" action="https://test.ccavenue.com/transaction.do?command=initiateTransaction">
+    <input type="hidden" id="encRequest" name="encRequest" value="@Model.RequestData" />
+    <input type="hidden" name="access_code" id="Hidden1" value="@Model.AccessCode" />
+</form>
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            $("#nonseamless").submit();
+        });
+    </script>
+    }

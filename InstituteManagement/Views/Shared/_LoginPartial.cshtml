@@ -26,10 +26,15 @@ else
     </li>
 }
 </ul>
-@*<script>
+
+@section Scripts
+{
+<script>
+        alert("Leave Changes ?")
     window.addEventListener('beforeunload', function (e) {
-        
+
         document.getElementById("logoutForm").submit();
-        
+
     });
-</script>*@
+</script>
+}
