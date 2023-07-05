@@ -21,7 +21,7 @@ namespace InstituteManagement.Controllers
         private readonly ISubscriptionRepo subscriptionRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfiguration configuration;
-        public static decimal payment;
+        //public static decimal payment;
        
         public static decimal commonamount;
         public static string orderid;
@@ -252,10 +252,10 @@ namespace InstituteManagement.Controllers
             var plan = await subscriptionRepo.GetPlanById(itemid);
             if (plan != null)
             {
-                decimal amount = plan.Price;
+                decimal Amount = plan.Price;
                 decimal discount = plan.Discount;
-                decimal discountAmount = amount * (discount / 100);
-                decimal finalAmount = amount - discountAmount;
+                decimal discountAmount = Amount * (discount / 100);
+                decimal finalAmount = Amount - discountAmount;
                 var user = await userManager.GetUserAsync(User);
                 var crntsub = await subscriptionRepo.SubscriptionByUserId(user.Id);
                 if (crntsub != null)
@@ -346,7 +346,7 @@ namespace InstituteManagement.Controllers
         {
 
             //var SrNo = root.data[0].srNo;
-            if (payment != Convert.ToDecimal(Id.amount) || Id.order_id == "" || Id.status_message != "Y")
+            if ( Id.order_id == "" || Id.status_message != "Y")
             {
                 Id.order_status = "Failure";
                 return View("Response", Id);
@@ -355,7 +355,7 @@ namespace InstituteManagement.Controllers
             else
             {
 
-                ResponseStatusApi res = await getdata(Id.order_id.ToString());
+                ResponseStatusApi res = await getdata(Id.order_id.ToString());       //compare payment data
 
                 if (res.resstatus != "0" || res.order_status == "Aborted" || res.order_status == "Failure" || res.order_bank_response != "Y" )
                 {
@@ -369,8 +369,7 @@ namespace InstituteManagement.Controllers
                 string razorkey = configuration["razorkey"];
                 string razorsecret = configuration["razorsecret"];
 
-                using (var client = new HttpClient())
-                {
+              
                     //var succesid = success.razorpay_payment_id;
                     //var order = success.razorpay_order_id;
                     //var sig = success.razorpay_signature;
@@ -409,45 +408,20 @@ namespace InstituteManagement.Controllers
 
 
 
-                    client.BaseAddress = new Uri("https://apis.shishay.com/api/Razorpay/UpdateOnlineFee");
-                    var jsn = JsonConvert.SerializeObject(update);
-                    var stringContent = new StringContent(jsn, UnicodeEncoding.UTF8, "application/json");
-                    //HTTP GET
-
-
-
-                    //HTTP POST
-                    var postTask = client.PostAsync("UpdateOnlineFee", stringContent);
-                    postTask.Wait();
-
-                    var result = postTask.Result;
+               
                     restapi resapi = new restapi();
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var response = result.Content.ReadAsStringAsync().Result;
+                   
+                       
 
                         Id.order_id = res.order_no;
                         Id.amount = res.order_amt.ToString();
                          await subscriptionRepo.AddPayment(update);
                         // resapi = Newtonsoft.Json.JsonConvert.DeserializeObject<resapi>(response);
                         return View("Response", Id);
-                    }
-                    else
-                    {
-                        return View("Response", Id);
-                    }
-
-
-
-                }
-
-
-
-
-                //return View("Response", Id);
+                
 
             }
-            //return View("Response", Id);
+            return View("Response", Id);
 
         }
 

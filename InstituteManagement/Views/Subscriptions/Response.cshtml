@@ -1,0 +1,12 @@
+﻿@using InstituteManagement_Models.Subscriptions;
+@model ResponseData
+@{
+    ViewData["Title"] = $"Transaction {@Model.order_status}";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p> Order Id: @Model.order_id, @Model.order_status</p>
+<p>Amount     :  @Model.amount</p>
+<p>Order No     :  @Model.order_id</p>
+<p>Status_message     :  @Model.status_message</p>
+<p>Learn about <a href="https://bkmpanchkula.com/about-us/">B.K.M. VISHVAS SCHOOL</a>.</p>
