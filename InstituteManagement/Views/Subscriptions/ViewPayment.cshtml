@@ -1,0 +1,25 @@
+﻿@using InstituteManagement_Models.Subscriptions;
+@model Payment;
+<div class="row">
+    <div class="col-sm-12 mb-3 mb-sm-0">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Payment Details</h5>
+                
+                    <p class="card-text">Order Id : @Model.razorpay_Order_Id</p>
+                
+
+                <p class="card-text">Payment Id : @Model.razorpay_Payment_Id</p>
+                <p class="card-text">Amount Paid : @Model.amountPaid / @Model.currency</p>
+                <p class="card-text">Payment Mode : @Model.method</p>
+                
+                <p class="card-text">Payment Date & Time : @Model.authat</p>
+                <p class="card-text">Plan Id : @Model.PlanId</p>
+                <p class="card-text">User Id : @Model.AppUserId</p>
+                <p class="card-text">Payment Status : @Model.status</p>
+                <a asp-action="PendingSubscriptions" asp-controller="Subscriptions" class="btn btn-primary">Go Back</a>
+                <a asp-action="ConfirmPayment" asp-controller="Subscriptions" asp-route-id="@Model.AppUserId" class="btn btn-success">Confirm Payment</a>
+            </div>
+        </div>
+    </div>
+    </div>

@@ -68,6 +68,10 @@ namespace InstituteManagement.Models.Repositories
             return await _context.Subscriptions.Include(s=>s.Plans).Include(x=>x.ApplicationUser).Where(a=>a.IsActive).ToListAsync();
         }
 
+        public async Task<IEnumerable<Subscription>> pendingSubscriptions()
+        {
+            return await _context.Subscriptions.Include(s => s.Plans).Include(x => x.ApplicationUser).Where(a => a.IsActive==false && a.IsPaymentComplete==false).ToListAsync();
+        }
         public async Task<Subscription> SubscriptionById(int id)
         {
             var model= await _context.Subscriptions.Include(s=>s.Plans).Include(u=>u.ApplicationUser).FirstOrDefaultAsync(s=>s.Id==id);
@@ -75,7 +79,7 @@ namespace InstituteManagement.Models.Repositories
         }
         public async Task<Subscription> SubscriptionByUserId(string Uid)
         {
-            var model = await _context.Subscriptions.FirstOrDefaultAsync(s =>s.UserId==Uid );
+            var model = await _context.Subscriptions.Include(x=>x.Plans).Include(u=>u.ApplicationUser).FirstOrDefaultAsync(s =>s.UserId==Uid );
             return model;
         }
 
@@ -125,9 +129,15 @@ namespace InstituteManagement.Models.Repositories
             return payment;
         }
 
-        public async Task<IEnumerable<Payment>> GetPayment()
+        public async Task<IEnumerable<Payment>> GetPayments()
         {
             return await _context.Payments.ToListAsync();     
+        }
+
+        public async Task<Payment> GetPaymentByUserId(string userId)
+        {
+            var model= await _context.Payments.FirstOrDefaultAsync(x=>x.AppUserId == userId);
+            return model;
         }
     }
 }

@@ -80,20 +80,26 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" asp-action="Index" asp-controller="Subscriptions" >
+        <a class="nav-link" data-toggle="collapse" href="#ui-Subscription" aria-expanded="false" aria-controls="ui-Subscription">
             <i class="mdi mdi-format-list-bulleted menu-icon"></i>
             <span class="menu-title">Subscriptions</span>
+            <i class="menu-arrow"></i>
         </a>
-        <div class="collapse" >
+
+        
+        <div class="collapse" id="ui-Subscription">
             <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Index" asp-controller="Subscriptions">View Plans</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-action="CreatePlan" asp-controller="Subscriptions">Create Plan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="GetSubscriptions" asp-controller="Subscriptions">View Subscriptions</a>
+                    <a class="nav-link" asp-action="GetSubscriptions" asp-controller="Subscriptions">Active Subscriptions</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="CreateSubscription" asp-controller="Subscriptions">Create Subscription</a>
+                    <a class="nav-link" asp-action="PendingSubscriptions" asp-controller="Subscriptions">Pending Subscriptions</a>
                 </li>
                 
             </ul>

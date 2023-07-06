@@ -7,7 +7,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Active Subscriptions</h5>
+                    <h5>All Subscriptions</h5>
                     @*<span>DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code>$().DataTable();</code>.</span><span>Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</span>*@
 
                     <button class="btn btn-pill btn-outline-primary-2x btn-air-primary" type="button" title="btn btn-pill btn-outline-primary-2x btn-air-primary" asp-action="CreatePlan" asp-controller="Subscription">Create Plan</button>
@@ -27,8 +27,8 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="display table  table-bordered  mt-5 " id="basic-1" style="border:solid;">
-                            <thead>
-                                <tr>
+                            <thead style="border:solid;">
+                                <tr style="border:solid;">
                                     <th>SrNo</th>
                                     <th>Created On</th>
                                     <th>Name</th>
@@ -36,15 +36,15 @@
                                     <th>Plan</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
-                                    
+
                                     <th>Amount Paid</th>
                                     <th>Paid On</th>
                                     <th>Payment Status</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
+                            </thead >
+                            <tbody class="table-group-divider" >
                                 @if (Model.Any())
                                 {
 
@@ -61,7 +61,7 @@
                                             <td>@data.PlanId</td>
                                             <td>@data.StartDate</td>
                                             <td>@data.EndDate</td>
-                                            
+
                                             <td>@data.AmountPaid</td>
                                             <td>@data.PaymentDate</td>
                                             <td>@data.IsPaymentComplete</td>
@@ -74,15 +74,15 @@
                                                 else
 
                                                 {
-                                                    <a asp-controller="Subscriptions" asp-action="SubscriptionStatus" asp-route-id="@data.Id" class="btn btn-danger btn-sm"> <span>Expired</span> </a>
+                                                    <a asp-controller="Subscriptions" asp-action="SubscriptionStatus" asp-route-id="@data.Id" class="btn btn-danger btn-sm"> <span>InActive</span> </a>
                                                 }
                                             </td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <a asp-controller="Subscriptions" asp-action="ViewSubscription" asp-route-id="@data.Id" class="btn btn-success btn-sm"> <span class="bi bi-eye"></span> </a>
-                                                    <a class="btn btn-info btn-sm" asp-controller="Subscriptions" asp-action="EditSubscription" asp-route-id="@data.Id" data-bs-original-title="" title=""> <span class="bi bi-pencil-square"></span> </a>
+                                                    <a asp-controller="Subscriptions" asp-action="ViewSubscribedUser" asp-route-id="@data.Id" class="btn btn-success btn-sm"> <span class="bi bi-eye"></span> </a>
+                                                    <a class="btn btn-info btn-sm" asp-controller="Subscriptions" asp-action="ViewPayment" asp-route-id="@data.UserId" data-bs-original-title="" title=""> <span class="bi bi-wallet2"></span> </a>
 
-                                                    <a asp-action="DeleteSubscription" asp-controller="Subscriptions" asp-route-id="@data.Id" class="btn btn-danger btn-sm" onclick="if(!confirm('Are you Sure To delete item ?')){return false}"> <span class="bi bi-trash"></span> </a>
+                                                    <a asp-action="ConfirmPayment" asp-controller="Subscriptions" asp-route-id="@data.UserId" class="btn btn-primary btn-sm"> <span class="bi bi-check"></span> </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -104,3 +104,6 @@
         <!-- Zero Configuration  Ends-->
     </div>
 </div>
+
+
+

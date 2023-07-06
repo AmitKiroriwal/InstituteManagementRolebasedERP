@@ -15,7 +15,9 @@ namespace InstituteManagement.Models.Interfaces
         public Task<Subscription> CreateSubscription(Subscription subscription);
         public Task<Subscription> UpdateSubscription(Subscription subscription);
         public Task<Subscription> DeleteSubscription(int id);
-        public Task<IEnumerable<Payment>> GetPayment();
+        public Task<IEnumerable<Payment>> GetPayments();
         public Task<Payment> AddPayment(Payment payment);
+        public Task<IEnumerable<Subscription>> pendingSubscriptions();
+        public Task<Payment> GetPaymentByUserId(string userId);
     }
 }

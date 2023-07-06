@@ -471,5 +471,12 @@ namespace InstituteManagement.Controllers
             return RedirectToAction("ListUsers");
         }
 
+        public async Task<IActionResult> AllPayments()
+        {
+            var model = await subscriptionRepo.GetPayments();
+            return View(model);
+        }
+       
+
     }
 }

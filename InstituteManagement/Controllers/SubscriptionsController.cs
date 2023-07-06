@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Nancy.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using System.Net.Http.Headers;
 using System.Numerics;
 using System.Security.Cryptography;
@@ -224,17 +225,7 @@ namespace InstituteManagement.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Payment(Subscription model)
-        {
-            
-            
-            // Retrieve the plan details, discounts, and calculate the final payment amount
-
-            // Redirect to the payment page with the amount and other necessary parameters
-            //return Redirect($"/payment/checkout?amount={amount}&discounts={discount}");
-            return View();
-        }
+       
 
         [HttpPost]
         public async Task<IActionResult> SubscribePlan(int itemid)
@@ -404,15 +395,9 @@ namespace InstituteManagement.Controllers
                     update.method = res.order_card_name;
                     update.currency = res.order_currncy;
                     update.ctype = res.order_device_type;
-
-
-
-
-               
+         
                     restapi resapi = new restapi();
-                   
-                       
-
+      
                         Id.order_id = res.order_no;
                         Id.amount = res.order_amt.ToString();
                          await subscriptionRepo.AddPayment(update);
@@ -520,5 +505,54 @@ namespace InstituteManagement.Controllers
             return View();
         }
 
+        public async Task<IActionResult> PendingSubscriptions()
+        {
+            var model = await subscriptionRepo.pendingSubscriptions();
+            return View(model);
+        }
+
+        public async Task<IActionResult> ViewPayment(string Id)
+        {
+            if(Id != null)
+            {
+               var payment= await subscriptionRepo.GetPaymentByUserId(Id);
+               
+                return View(payment);
+            }
+            ViewBag.Message = "Payment Details Not Found for this User Record!";
+            return View("PendingSubscriptions");
+        }
+
+        public async Task<IActionResult> ViewSubscribedUser(int id)
+        {
+            var details = await subscriptionRepo.SubscriptionById(id);
+            return View(details);
+        }
+
+        public async Task<IActionResult> ConfirmPayment(string Id)
+        {
+            if(Id!=null)
+            {
+                var payment = await subscriptionRepo.GetPaymentByUserId(Id);
+                var crntsub = await subscriptionRepo.SubscriptionByUserId(Id);
+                if (crntsub != null)
+                {
+                    
+                    crntsub.IsActive = true;
+                    
+                    crntsub.StartDate = DateTime.UtcNow;
+                    crntsub.EndDate = DateTime.UtcNow.AddMonths(Convert.ToInt32(crntsub.Plans.Duration));
+                    
+                    
+                    crntsub.IsPaymentComplete = true;
+                    crntsub.AmountPaid = Convert.ToDecimal(payment.amountPaid);
+                }
+                await subscriptionRepo.UpdateSubscription(crntsub);
+                return RedirectToAction("GetSubscriptions");
+            }
+
+
+            return RedirectToAction("PendingSubscriptions");
+        }
     }
 }

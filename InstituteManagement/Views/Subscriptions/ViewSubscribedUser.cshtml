@@ -1,0 +1,40 @@
+﻿@using InstituteManagement_Models.Subscriptions;
+@model Subscription;
+<div class="row">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">User Information</h5>
+                @if (Model.ApplicationUser.UserName != null)
+                {
+                    <p class="card-text">User Name : @Model.ApplicationUser.UserName</p>
+                }
+               
+                    <p class="card-text">Phone Number : @Model.ApplicationUser.PhoneNumber</p>
+                <p class="card-text">Created Date : @Model.ApplicationUser.AddedOn</p>
+                <p class="card-text">Institute Name : @Model.ApplicationUser.InstituteName</p>
+                <p class="card-text">Account Type : @Model.ApplicationUser.RoleName</p>
+                <p class="card-text">Pan Number : @Model.ApplicationUser.PanNo</p>
+                <p class="card-text">Email Confirmed : @Model.ApplicationUser.EmailConfirmed</p>
+                <p class="card-text">Account Status : @Model.ApplicationUser.Status</p>
+                <a asp-action="PendingSubscriptions" asp-controller="Subscriptions" class="btn btn-primary">Go Back</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Subscription Details</h5>
+                <p class="card-text">Subscription Name : @Model.Name</p>
+                <p class="card-text">Created Date : @Model.CreationDate</p>
+                <p class="card-text">Plan Type : @Model.Plans.PlanName</p>
+                <p class="card-text">Plan Duration : @Model.Plans.Duration  months</p>
+                <p class="card-text">Price : @Model.Plans.Price</p>
+                <p class="card-text">Payment Status : @Model.IsPaymentComplete</p>
+                
+                <p class="card-text">Subscription Status : @Model.IsActive</p>
+                <a asp-action="PendingSubscriptions" asp-controller="Subscriptions" class="btn btn-success">Confirm Subscription</a>
+            </div>
+        </div>
+    </div>
+</div>
